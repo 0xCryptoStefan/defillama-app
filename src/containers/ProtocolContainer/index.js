@@ -20,7 +20,7 @@ import { AllTvlOptions } from 'components/SettingsModal'
 import TokenLogo from 'components/TokenLogo'
 
 import { useCalcSingleExtraTvl } from '../../hooks/data'
-import { useScrollToTop, useProtocolColor, useXl, useLg } from 'hooks'
+import { useScrollToTop, useProtocolColor, useXl, useLg, useIsClient } from 'hooks'
 import { TYPE, ThemedBackground } from 'Theme'
 import { formattedNum, getBlockExplorer, toK } from 'utils'
 import SEO from 'components/SEO'
@@ -196,6 +196,9 @@ function ProtocolContainer({ protocolData, protocol, denomination, selectedChain
     }
   }
 
+
+  const isClient = useIsClient()
+
   return (
     <PageWrapper>
       <SEO cardName={name} token={name} logo={logo} tvl={formattedNum(totalVolume, true)} />
@@ -299,7 +302,7 @@ function ProtocolContainer({ protocolData, protocol, denomination, selectedChain
                   gridRow: ['', '', '', '1/4'],
                 }}
               >
-                {/* <ProtocolChart
+                <ProtocolChart
                   denomination={denomination}
                   chartData={chartData}
                   protocol={name}
@@ -312,14 +315,14 @@ function ProtocolContainer({ protocolData, protocol, denomination, selectedChain
                   chainsList={chainsList}
                   tokensUnique={tokensUnique}
                   {...protocolParams}
-                /> */}
+                />
               </Panel>
             </PanelWrapper>
           </>
 
           <>
-            <SectionPanel title="Charts" topMargin={false}>
-              {/* <AutoRow>
+            {isClient && <SectionPanel title="Charts" topMargin={false}>
+              <AutoRow>
                 <GeneralAreaChart finalChartData={chainsStacked} aspect={aspect} formatDate={formatDate} color={backgroundColor}
                   tokensUnique={chains}
                 />
@@ -334,8 +337,8 @@ function ProtocolContainer({ protocolData, protocol, denomination, selectedChain
                 <GeneralBarChart finalChartData={tokenInflows} aspect={aspect} formatDate={formatDate} color={backgroundColor}
                   tokensUnique={tokensUnique}
                 />
-              </AutoRow>} */}
-            </SectionPanel>
+              </AutoRow>}
+            </SectionPanel>}
             <SectionPanel title="Methodology">
               {methodology && (
                 <TokenDetailsLayout style={{ marginBottom: '1em' }}>
